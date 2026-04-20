@@ -1,4 +1,5 @@
 import requests
+import bs4
 
 # Comando de ativação do venv : .\venv\Scripts\Activate.ps1
 
@@ -16,7 +17,11 @@ response = requests.get(url_test, headers=headers)
 # Abaixo irei verificar o status e acessar os dados (se conseguir acessar)
 if response.status_code == 200:
     dados = response.text   # Este comando converte a resposta da requisição para Python
-    print(dados)
-    print(len(dados))
+#   print(dados)
+#  print(len(dados))
+    objSoup = bs4.BeautifulSoup(response.text, features="html.parser")  # Chamando a função do bs4, para extração dos dados
+    print(objSoup.title.text)   # Aqui eu peço pra ele extrair somente o texto que tem no <title>
 else:
     print(f"Erro: {response.status_code}")
+
+    
